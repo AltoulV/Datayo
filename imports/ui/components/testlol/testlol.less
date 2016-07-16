@@ -1,0 +1,29 @@
+svg .type:focus, .Action:focus, .Piste:focus, .Score:focus{
+    outline: none;
+    border: 0;
+}
+
+svg .Score text {
+    fill: #fff;
+    stroke: none;
+    font-family: Verdana;
+}
+
+svg .type, .Action , .Score, .Piste{
+    fill: #727272;
+    stroke-width: 1;
+    stroke: #727272;
+    -webkit-transition: stroke 0.5s, fill 0.5s;
+    -o-transition: stroke 0.5s, fill 0.5s;
+    transition: stroke 0.5s,  fill 0.5s;
+}
+
+svg .type:hover , .type.active , .Action:hover , .Action.active, .Score:hover, .Piste.active, .Piste:hover {
+    cursor: pointer;
+    stroke-width: 1;
+    stroke: #F4961A;
+    fill: #F4961A;
+    -webkit-transition: stroke-width 0.5s, fill-width 0.5s ;
+    -o-transition: stroke-width 0.5s, fill-width 0.5s ;
+    transition: stroke-width 0.5s, fill-width 0.5s ;
+ }
