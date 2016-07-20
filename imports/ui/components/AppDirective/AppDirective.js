@@ -1,6 +1,5 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
-import ngMaterial from 'angular-material';
 
 import template from '../svg.html';
 
@@ -8,7 +7,7 @@ class AppControl {
     constructor($scope, $reactive, $mdDialog) {
         'ngInject';
         $reactive(this).attach($scope);
-        this.mdDialog = $mdDialog;
+        this.$mdDialog = $mdDialog;
         this.match = [];
         this.hoverPiste;
         this.hoverRegion;
@@ -16,6 +15,8 @@ class AppControl {
         this.objTmp = {type: "", where: "", action:"", given:""};
         this.scoreG = 0;
         this.scoreD = 0;
+        this.nameG = "";
+        this.nameD = "";
     }
     pushData() {
         if (this.scoreG < 15 && this.scoreD < 15) {
@@ -29,15 +30,31 @@ class AppControl {
         }
         if (this.scoreG == 15 || this.scoreD == 15)
         {
-            alert = this.mdDialog.alert({
-                title: 'Attention',
-                textContent: 'This is an example of how easy dialogs can be!',
-                ok: 'Close'
+            this.$mdDialog.show({
+                locals: {parent: this},
+                controller: angular.noop,
+                controllerAs: 'vm',
+                bindToController: true,
+                template: 
+            '<md-dialog aria-label="List dialog" layout-padding>' +
+            '   <md-dialog-content>'+
+            '       <md-input-container>' +
+            '           <label>Right Player</label>' +
+            '           <input type="text" ng-model="vm.parent.nameD">' +
+            '       </md-input-container>' +
+            '   </md-dialog-content>' +
+            '   <md-dialog-content>'+
+            '       <md-input-container>' +
+            '           <label>Left Player</label>' +
+            '           <input type="text" ng-model="vm.parent.nameG">' +
+            '       </md-input-container>' +
+            '   </md-dialog-content>' +
+            '   <md-dialog-actions>' +
+            '       <md-button ng-click="vm.parent.backDialog()" class="md-primary">Back</md-button>' +
+            '       <md-button ng-click="vm.parent.saveDialog()" class="md-primary">Save</md-button>' +
+            '   </md-dialog-actions>' +
+            '</md-dialog>',
             });
-            this.mdDialog.show( alert )
-            .finally(function() {
-            alert = undefined;
-        })
         }
         this.objTmp = {type: "", where: "", action:"", given:""};
         this.hoverRegion = null;
@@ -51,6 +68,7 @@ class AppControl {
         this.scoreD = 0;
         this.hoverRegion = null;
         this.hoverAction = null;
+        this.hoverPiste = null;
     }
     backData() {
         if (this.match.length != 0) {
@@ -64,13 +82,18 @@ class AppControl {
             this.objTmp = {type: "", where: "", action:"", given:""};
         }
     }
+    backDialog() {
+        this.$mdDialog.hide();
+    }
+    saveDialog() {
+        this.$mdDialog.hide();
+    }
 }
 
 const name = 'appdirective';
 
 export default angular.module(name, [
-    angularMeteor,
-    ngMaterial
+    angularMeteor
 ]).directive(name, ['$compile', function ($compile) {
     return {
         restrict: 'AE',
