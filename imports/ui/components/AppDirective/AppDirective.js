@@ -2,7 +2,8 @@ import angular from 'angular';
 import angularMeteor from 'angular-meteor';
 
 import template from '../svg.html';
-
+import { Match } from '../../../api/match';
+import { Player } from '../../../api/player';
 class AppControl {
     constructor($scope, $reactive, $mdDialog) {
         'ngInject';
@@ -39,14 +40,14 @@ class AppControl {
             '<md-dialog aria-label="List dialog" layout-padding>' +
             '   <md-dialog-content>'+
             '       <md-input-container>' +
-            '           <label>Right Player</label>' +
-            '           <input type="text" ng-model="vm.parent.nameD">' +
+            '           <label>Left Player</label>' +
+            '           <input type="text" ng-model="vm.parent.nameG">' +
             '       </md-input-container>' +
             '   </md-dialog-content>' +
             '   <md-dialog-content>'+
             '       <md-input-container>' +
-            '           <label>Left Player</label>' +
-            '           <input type="text" ng-model="vm.parent.nameG">' +
+            '           <label>Right Player</label>' +
+            '           <input type="text" ng-model="vm.parent.nameD">' +
             '       </md-input-container>' +
             '   </md-dialog-content>' +
             '   <md-dialog-actions>' +
@@ -66,6 +67,8 @@ class AppControl {
         this.objTmp = {type: "", where: "", action:"", given:""};
         this.scoreG = 0;
         this.scoreD = 0;
+        this.nameG = "";
+        this.nameD = "";
         this.hoverRegion = null;
         this.hoverAction = null;
         this.hoverPiste = null;
@@ -85,8 +88,28 @@ class AppControl {
     backDialog() {
         this.$mdDialog.hide();
     }
+    search_collection(collection, x, s)
+    {
+        var tmp = false;
+        collection.forEach(function (row) {
+            if (row.name == x) {
+                Player.update({ _id: row._id }, { $inc: {score: s} })
+                tmp = true;
+            }
+        });
+        return tmp;
+    }
     saveDialog() {
         this.$mdDialog.hide();
+        var cursor = Player.find({});
+        if (!(this.search_collection(cursor, this.nameD, this.scoreD))) {
+            Player.insert({'name': this.nameD, 'score': this.scoreD});
+        }
+        if (!(this.search_collection(cursor, this.nameG, this.scoreG))) {
+            Player.insert({'name': this.nameG, 'score': this.scoreG});
+        }
+        Match.insert({'nameG': this.nameG, 'nameD': this.nameD, 'scoreG': this.scoreG, 'scoreD': this.scoreD});
+        this.resetData();
     }
 }
 

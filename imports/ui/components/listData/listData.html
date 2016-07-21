@@ -1,9 +1,22 @@
 <h1>LISTE DATA</h1>
 <ul>
-  <li ng-repeat="party in listdata.match">
-  	{{party.name}}
-  	====
-  	{{party.description}}
-  	{{party.lol}}
-  </li>
+	<div layout="row">
+		<div flex>
+			<li ng-repeat="data in listdata.match">
+				{{data.nameG}}
+				{{data.scoreG}}
+				-vs-
+				{{data.scoreD}}
+				{{data.nameD}}
+				<salut-remove data="data"></salut-remove>
+			</li>
+		</div>
+		<div flex>
+			<li ng-repeat="player in listdata.player">
+				{{player.name}}
+				{{player.score}}
+				<player-remove data="player"></player-remove>
+			</li>
+		</div>
+	</div>
 </ul>

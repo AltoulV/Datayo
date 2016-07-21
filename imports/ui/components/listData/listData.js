@@ -4,6 +4,7 @@ import uiRouter from 'angular-ui-router';
 
 import template from './listData.html';
 import { Match } from '../../../api/match';
+import { Player } from '../../../api/player';
 
 class ListData {
   constructor($scope, $reactive) {
@@ -13,6 +14,9 @@ class ListData {
     this.helpers({
       match() {
         return Match.find({});
+      },
+      player() {
+        return Player.find({});
       }
     });
   }
