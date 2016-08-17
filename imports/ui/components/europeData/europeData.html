@@ -1,0 +1,17 @@
+<div layout="column" layout-align="center center">
+	<h2 class="md-display-3">Analyse Championnat d'Europe Sabre</h2>
+</div>
+<div layout="row" layout-align="center center">
+	<md-button class="md-raised" ng-click="europedata.men()">Homme</md-button>
+	<md-button class="md-raised" ng-click="europedata.women()">Femme</md-button>
+</div>
+<div layout="row" layout-align="center center">
+	<div flex="30">
+		<h4>Type de touches en %</h4>
+		<chartpie my-attr="type" my-data="europedata.touche"></chartpie>
+	</div>
+	<div flex="30">
+		<h4>Action Courte / Longue en %</h4>
+		<chartpie my-attr="action" my-data="europedata.touche"></chartpie>
+	</div>
+</div>

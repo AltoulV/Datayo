@@ -1,15 +1,18 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
+import moment from 'moment';
 
 import template from '../svg.html';
+import { Touche } from '../../../api/touche';
 import { Match } from '../../../api/match';
-import { Player } from '../../../api/player';
+
 class AppControl {
     constructor($scope, $reactive, $mdDialog) {
         'ngInject';
         $reactive(this).attach($scope);
         this.$mdDialog = $mdDialog;
         this.match = [];
+        this.genre;
         this.hoverPiste;
         this.hoverRegion;
         this.hoverAction;
@@ -18,6 +21,7 @@ class AppControl {
         this.scoreD = 0;
         this.nameG = "";
         this.nameD = "";
+        this.date = moment().format("L");
     }
     pushData() {
         if (this.scoreG < 15 && this.scoreD < 15) {
@@ -48,6 +52,15 @@ class AppControl {
             '       <md-input-container>' +
             '           <label>Right Player</label>' +
             '           <input type="text" ng-model="vm.parent.nameD">' +
+            '       </md-input-container>' +
+            '   </md-dialog-content>' +
+            '   <md-dialog-content>'+
+            '       <md-input-container class="md-block">' +
+            '       <label>genre</label>' +
+            '           <md-select ng-model="vm.parent.genre">' +
+            '               <md-option>Femme</md-option>' +
+            '               <md-option>Homme</md-option>' +
+            '           </md-select>' +
             '       </md-input-container>' +
             '   </md-dialog-content>' +
             '   <md-dialog-actions>' +
@@ -88,27 +101,27 @@ class AppControl {
     backDialog() {
         this.$mdDialog.hide();
     }
-    search_collection(collection, x, s)
-    {
-        var tmp = false;
-        collection.forEach(function (row) {
-            if (row.name == x) {
-                Player.update({ _id: row._id }, { $inc: {score: s} })
-                tmp = true;
-            }
-        });
-        return tmp;
-    }
     saveDialog() {
+        var id_match;
         this.$mdDialog.hide();
-        var cursor = Player.find({});
-        if (!(this.search_collection(cursor, this.nameD, this.scoreD))) {
-            Player.insert({'name': this.nameD, 'score': this.scoreD});
-        }
-        if (!(this.search_collection(cursor, this.nameG, this.scoreG))) {
-            Player.insert({'name': this.nameG, 'score': this.scoreG});
-        }
-        Match.insert({'nameG': this.nameG, 'nameD': this.nameD, 'scoreG': this.scoreG, 'scoreD': this.scoreD});
+        id_match = Match.insert({
+                        'nameG' : this.nameG,
+                        'nameD' : this.nameD,
+                        'scoreG': this.scoreG,
+                        'scoreD': this.scoreD,
+                        'date'  : this.date.toString()
+                        });
+        this.match.forEach((touche) => {
+        Touche.insert({
+                        'id_match'  : id_match,
+                        'genre'     : this.genre,
+                        'prise'     : touche.given == 'D' ? this.nameG : this.nameD,
+                        'mise'      : touche.given == 'D' ? this.nameD : this.nameG,
+                        'type'      : touche.type,
+                        'where'     : touche.where,
+                        'action'    : touche.action
+                    });
+        });
         this.resetData();
     }
 }
@@ -187,7 +200,8 @@ export default angular.module(name, [
                 if (scope.elementId == "SI") {
                     scope.objTmp.given = "SI";
                     scope.objTmp.type = scope.elementId;
-                    scope.objTmp.action = "AcC"
+                    scope.objTmp.action = "SI"
+                    scope.objTmp.where = "SI"
                     scope.addData();
                 }
                 if (scope.elementId == "Reset") {

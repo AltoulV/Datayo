@@ -1,18 +1,18 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
  
-import template from './playerRemove.html';
-import { Player } from '../../../api/player';
+import template from './matchRemove.html';
+import { Match } from '../../../api/match';
  
-class PlayerRemove {
+class MatchRemove {
   remove() {
     if (this.data) {
-      Player.remove(this.data._id);
+      Match.remove(this.data._id);
     }
   }
 }
  
-const name = 'playerRemove';
+const name = 'matchRemove';
  
 // create a module
 export default angular.module(name, [
@@ -23,5 +23,5 @@ export default angular.module(name, [
     data: '<'
   },
   controllerAs: name,
-  controller: PlayerRemove
+  controller: MatchRemove
 });

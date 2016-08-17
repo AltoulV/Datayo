@@ -2,12 +2,12 @@ import angular from 'angular';
 import angularMeteor from 'angular-meteor';
  
 import template from './salutRemove.html';
-import { Match } from '../../../api/match';
+import { Touche } from '../../../api/touche';
  
 class SalutRemove {
   remove() {
     if (this.data) {
-      Match.remove(this.data._id);
+      Touche.remove(this.data._id);
     }
   }
 }

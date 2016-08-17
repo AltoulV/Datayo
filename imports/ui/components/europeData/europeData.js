@@ -3,41 +3,33 @@ import angularMeteor from 'angular-meteor';
 import uiRouter from 'angular-ui-router';
 import Chart from 'angular-chart.js';
 
-import template from './listData.html';
+import template from './europeData.html';
 import { Touche } from '../../../api/touche';
-import { Match } from '../../../api/match';
 import { name as chartpie } from '../chartPie/chartPie';
 
-class ListData {
+class europeData {
   constructor($scope, $reactive) {
     'ngInject';
 
     $reactive(this).attach($scope);
-    this.selectedPrise = null;
-    this.selectedMise = null;
-    this.selectedFilter = "type";
-    this.labels = ["1", "2"];
-    this.data = [1, 2];
+    this.attr = ""
+    this.mygenre = "";
     this.helpers({
       touche() {
-        return Touche.find({});
-      },
-      match() {
-        return Match.find({});
+        return Touche.find({'genre': this.getReactively('mygenre')});
       }
     });
+    console.log(this.touche)
   }
-  lol() {
-    this.match.forEach((match) => {
-      console.log(match._id);
-    });
-    this.touche.forEach((touche) => {
-      console.log(touche.id_match);
-    });
+  men () {
+    this.mygenre = "Homme";
+  }
+  women () {
+    this.mygenre = "Femme";
   }
 }
 
-const name = 'listdata';
+const name = 'europedata';
  
 // create a module
 export default angular.module(name, [
@@ -48,14 +40,14 @@ export default angular.module(name, [
 ]).component(name, {
   template,
   controllerAs: name,
-  controller: ListData
+  controller: europeData
 }).config(config);
 
 function config($stateProvider) {
   'ngInject';
   $stateProvider
-    .state('ListData', {
-      url: '/ListData',
-      template: '<listdata></listdata>'
+    .state('europeData', {
+      url: '/europeData',
+      template: '<europeData></europeData>'
     });
 }

@@ -9,7 +9,8 @@ import { name as listData } from '../listData/listData';
 import { name as testLol } from '../testlol/testlol';
 import { name as AppDirective } from '../AppDirective/AppDirective';
 import { name as SalutRemove } from '../salutRemove/salutRemove';
-import { name as PlayerRemove } from '../playerRemove/playerRemove';
+import { name as MatchRemove } from '../matchRemove/matchRemove';
+import { name as EuropeData } from '../europeData/europeData';
 
 class DataYo {}
  
@@ -25,7 +26,8 @@ export default angular.module(name, [
   testLol,
   AppDirective,
   SalutRemove,
-  PlayerRemove
+  MatchRemove,
+  EuropeData
 ]).component(name, {
   template,
   controllerAs: name,

@@ -1,28 +1,18 @@
 import { Meteor } from 'meteor/meteor';
+import { Touche } from '../imports/api/touche';
 import { Match } from '../imports/api/match';
-import { Player } from '../imports/api/player';
 
 Meteor.startup(() => {
-  if (Match.find().count() === 0) {
-    const match = [{
-      'name': 'Dubstep-Free Zone',
-      'description': 'Fast just got faster with Nexus S.'
-    }, {
-      'name': 'All dubstep all the time',
-      'description': 'Get it on!'
-    }, {
-      'name': 'Saaaaaaaavage lounging',
-      'description': 'Leisure suuuuuit required. And only fiercest manners.'
-    }];
- 
-    match.forEach((party) => {
-      Match.insert(party)
-    });
-  }
-  if (Player.find().count() === 0) {
-    Player.insert({'name': 'GGWP', 'score': 18})
-  }
-});
+  if (Touche.find().count() === 0) {
+    Touche.insert({prise: "Jean-Mich", mise: "Jacky"})
+    // match.forEach((party) => {
+    //   Match.insert(party)
+    // });
+    }
+    if (Match.find().count() === 0) {
+      Match.insert({nameG:"test", nameD:"test2", scoreD:15, scoreG:14, date:"12/03/2001"})
+    }
+  });
 
 // const player = [
 // {'place':'1','nom':'WAGNER','prenom':'Benedikt','nation':'GER'},
