@@ -1,7 +1,10 @@
-<div id="mySidenav" class="sidenav" ng-hide="toggle">
-  <a href="/ListData">Liste Data</a>
-  <a href="/test">test</a>
-   <a href="/europeData">Championnat D'Europe</br>Sabre</a>
+<div id="mySidenav" class="sidenav" ng-show="toggle">
+	<md-button class="md-primary" ng-click="toggle=!toggle">X</md-button>
+  	<a href="/ListData">Liste Data</a>
+  	<a href="/test">test</a>
+   	<a href="/europeData">Championnat D'Europe</br>Sabre</a>
 </div>
-<button type="button" class="navbar-toggle" ng-click="toggle=!toggle"></button>
+      <md-button class="md-primary close" ng-click="toggle=!toggle">
+        menu
+      </md-button>
 

@@ -103,6 +103,8 @@ class AppControl {
     }
     saveDialog() {
         var id_match;
+        var id_tmp;
+        var tab = [];
         this.$mdDialog.hide();
         id_match = Match.insert({
                         'nameG' : this.nameG,
@@ -112,7 +114,7 @@ class AppControl {
                         'date'  : this.date.toString()
                         });
         this.match.forEach((touche) => {
-        Touche.insert({
+        id_tmp = Touche.insert({
                         'id_match'  : id_match,
                         'genre'     : this.genre,
                         'prise'     : touche.given == 'D' ? this.nameG : this.nameD,
@@ -121,7 +123,9 @@ class AppControl {
                         'where'     : touche.where,
                         'action'    : touche.action
                     });
+        tab.push(id_tmp);
         });
+        Match.update({_id: id_match}, { $set: { 'id_touche': tab} });
         this.resetData();
     }
 }
@@ -198,10 +202,10 @@ export default angular.module(name, [
                     scope.addData();
                 }
                 if (scope.elementId == "SI") {
-                    scope.objTmp.given = "SI";
-                    scope.objTmp.type = scope.elementId;
+                    scope.objTmp.given = "";
+                    scope.objTmp.type = "";
                     scope.objTmp.action = "SI"
-                    scope.objTmp.where = "SI"
+                    scope.objTmp.where = ""
                     scope.addData();
                 }
                 if (scope.elementId == "Reset") {

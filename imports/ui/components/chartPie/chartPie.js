@@ -13,22 +13,18 @@ class chartPie {
     this.labels = [];
     this.data = [];
     this.autorun(() => {
-      console.log(this.getReactively('myData'));
+      this.getReactively('myData');
       this.search();
       this.pourcentage();
     });
 }
-  lol() {
-    console.log(this.myData);
-    this.search();
-  }
   search() {
     this.labels = [];
     this.data = [];
     var tmp = this.myAttr;
     var data = this.myData;
     for (var i = 0; i < data.length; i++) {
-      if (this.labels.includes(data[i][tmp]) == false) {
+      if (this.labels.includes(data[i][tmp]) == false && data[i][tmp] != "") {
         this.labels.push(data[i][tmp]);
         this.data.push(this.get_value(data[i][tmp], tmp));
       }
@@ -41,12 +37,14 @@ class chartPie {
       total += this.data[i];
     };
     for (var i = 0; i < this.data.length; i++) {
-      var tmp = this.data[i];
-      this.data[i] = Math.trunc((this.data[i] / total * 100) + ret);
-      ret = Math.round((((tmp / total * 100) + ret) - Math.trunc((tmp / total * 100) + ret))*100)/100;
-      if (i == this.data.length - 1) {
-        this.data[i] += ret;
-      }
+      //var tmp = this.data[i];
+      this.data[i] = Math.round(this.data[i] / total * 100);
+      //    code pour assurer un total de 100 -- fausse un peu les valeurs
+      //this.data[i] = Math.trunc((this.data[i] / total * 100) + ret);
+      // ret = Math.round((((tmp / total * 100) + ret) - Math.trunc((tmp / total * 100) + ret))*100)/100;
+      // if (i == this.data.length - 1) {
+      //   this.data[i] = Math.round(this.data[i] + ret);
+      // }
     };
   }
   get_value(value, param) {

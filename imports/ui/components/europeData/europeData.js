@@ -19,7 +19,6 @@ class europeData {
         return Touche.find({'genre': this.getReactively('mygenre')});
       }
     });
-    console.log(this.touche)
   }
   men () {
     this.mygenre = "Homme";
