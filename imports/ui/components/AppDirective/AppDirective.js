@@ -5,6 +5,7 @@ import moment from 'moment';
 import template from '../svg.html';
 import { Touche } from '../../../api/touche';
 import { Match } from '../../../api/match';
+import { Competition } from '../../../api/competition';
 
 class AppControl {
     constructor($scope, $reactive, $mdDialog) {
@@ -13,6 +14,7 @@ class AppControl {
         this.$mdDialog = $mdDialog;
         this.match = [];
         this.genre;
+        this.selectedComp;
         this.hoverPiste;
         this.hoverRegion;
         this.hoverAction;
@@ -22,6 +24,11 @@ class AppControl {
         this.nameG = "";
         this.nameD = "";
         this.date = moment().format("L");
+        this.helpers({
+            competition() {
+                return Competition.find({});
+            }
+        });
     }
     pushData() {
         if (this.scoreG < 15 && this.scoreD < 15) {
@@ -60,6 +67,16 @@ class AppControl {
             '           <md-select ng-model="vm.parent.genre">' +
             '               <md-option>Femme</md-option>' +
             '               <md-option>Homme</md-option>' +
+            '           </md-select>' +
+            '       </md-input-container>' +
+            '   </md-dialog-content>' +
+            '   <md-dialog-content>'+
+            '       <md-input-container class="md-block">' +
+            '       <label>Competition</label>' +
+            '           <md-select ng-model="vm.parent.selectedComp">' +
+            '               <md-option ng-repeat="data in vm.parent.competition">' +
+            '                   {{data.name}}' +
+            '               </md-option>' +
             '           </md-select>' +
             '       </md-input-container>' +
             '   </md-dialog-content>' +
@@ -107,11 +124,12 @@ class AppControl {
         var tab = [];
         this.$mdDialog.hide();
         id_match = Match.insert({
-                        'nameG' : this.nameG,
-                        'nameD' : this.nameD,
-                        'scoreG': this.scoreG,
-                        'scoreD': this.scoreD,
-                        'date'  : this.date.toString()
+                        'nameG'  : this.nameG,
+                        'nameD'  : this.nameD,
+                        'scoreG' : this.scoreG,
+                        'scoreD' : this.scoreD,
+                        'date'   : this.date.toString(),
+                        'comp'   : this.selectedComp
                         });
         this.match.forEach((touche) => {
         id_tmp = Touche.insert({
@@ -121,7 +139,8 @@ class AppControl {
                         'mise'      : touche.given == 'D' ? this.nameD : this.nameG,
                         'type'      : touche.type,
                         'where'     : touche.where,
-                        'action'    : touche.action
+                        'action'    : touche.action,
+                        'comp'      : this.selectedComp
                     });
         tab.push(id_tmp);
         });

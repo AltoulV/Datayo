@@ -56,6 +56,10 @@ class chartPie {
     };
     return tmp;
   }
+  // onclick (elem) {
+  //     console.log(this.myValue, elem[0]._view.label);
+  //     this.myValue = elem[0]._view.label;
+  // }
 }
 
 const name = 'chartpie';
@@ -69,7 +73,8 @@ export default angular.module(name, [
   template,
   bindings: {
     myAttr: '@',
-    myData: '='
+    myData: '=',
+    myValue: '<'
   },
   controllerAs: name,
   controller: chartPie

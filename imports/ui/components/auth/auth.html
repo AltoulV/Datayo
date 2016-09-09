@@ -1,0 +1,5 @@
+<div class="auth" layout="row">
+  <md-button ui-sref="login" ng-hide="auth.isLoggedIn">Admin</md-button>
+  <md-button ng-click="auth.logout()" ng-show="auth.isLoggedIn">Logout</md-button>
+<!--   <div ng-show="auth.isLoggedIn">{{auth.currentUser}}</div> -->
+</div>

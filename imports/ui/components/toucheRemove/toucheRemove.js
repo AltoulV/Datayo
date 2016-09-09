@@ -1,10 +1,10 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
  
-import template from './salutRemove.html';
+import template from './toucheRemove.html';
 import { Touche } from '../../../api/touche';
  
-class SalutRemove {
+class ToucheRemove {
   remove() {
     if (this.data) {
       Touche.remove(this.data._id);
@@ -23,5 +23,5 @@ export default angular.module(name, [
     data: '<'
   },
   controllerAs: name,
-  controller: SalutRemove
+  controller: ToucheRemove
 });

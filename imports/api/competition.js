@@ -1,8 +1,8 @@
 import { Mongo } from 'meteor/mongo';
  
-export const Match = new Mongo.Collection('match');
+export const Competition = new Mongo.Collection('competition');
 
-Match.allow({
+Competition.allow({
   insert(userId, party) {
     return userId;
   },

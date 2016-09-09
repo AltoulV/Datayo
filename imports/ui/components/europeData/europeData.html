@@ -1,21 +1,97 @@
-<div layout="column" layout-align="center center">
-	<h2 class="md-display-3">Analyse Championnat d'Europe Sabre</h2>
-</div>
-<div layout="row" layout-align="center center">
-	<md-button class="md-raised" ng-click="europedata.men()">Homme</md-button>
-	<md-button class="md-raised" ng-click="europedata.women()">Femme</md-button>
-</div>
-<div layout="row" layout-align="center center">
-	<div flex="30">
-		<h4>Type de touches en %</h4>
-		<chartpie my-attr="type" my-data="europedata.touche"></chartpie>
+<div layout="row" layout-align="center center" layout-wrap>
+	<h2 class="md-display-3" flex="100">DataYooo</h2>
+	<div flex="100">
+		<div layout="row" layout-align="center center" layout-wrap>
+			<md-input-container class="md-block test">
+				<label>Compétition</label>
+				<md-select ng-model="europedata.comp">
+					<md-option ng-repeat="data in europedata.competition">
+						{{data.name}}
+					</md-option>
+				</md-select>
+			</md-input-container>
+			<md-button class="md-raised" ng-click="europedata.men()">Homme</md-button>
+			<md-button class="md-raised" ng-click="europedata.women()">Femme</md-button>
+<!-- 				<md-button class="md-raised" ng-click="europedata.test()">test</md-button> -->
+		</div>
 	</div>
-	<div flex="30">
-		<h4>Action Courte / Longue en %</h4>
-		<chartpie my-attr="action" my-data="europedata.touche"></chartpie>
+	<div  class="Nbtouche" ng-show="europedata.mygenre">
+		Touches analysées: {{europedata.somme()}}
 	</div>
-	<div flex="30">
-		<h4>Situation de la touche en %</h4>
-		<chartpie my-attr="where" my-data="europedata.touche"></chartpie>
+	<div flex="100" ng-show="europedata.mygenre">
+		<div layout="row" layout-align="center center" layout-wrap>
+			<div flex="33">
+				<chartpie my-attr="type" my-data="europedata.touche"></chartpie>
+				<h4>Type de touches en %</h4>
+			</div>
+			<div flex="33">
+				<chartpie my-attr="action" my-data="europedata.touche"></chartpie>
+				<h4>Action Courte / Longue en %</h4>
+			</div>
+			<div flex="33">
+				<chartpie my-attr="where" my-data="europedata.touche"></chartpie>
+				<h4>Situation de la touche en %</h4>
+			</div>
+		</div>
+	</div>
+	<div flex="100" ng-show="europedata.mygenre">
+		<div layout="row" layout-align="center" layout-wrap>
+			<div flex="33">
+				<div layout="column" layout-align="center center" layout-wrap>
+					<md-input-container class="md-block" flex>
+						<label>Choisi un type</label>
+						<md-select ng-model="europedata.type">
+							<md-option value="PR">Parades rispostes</md-option>
+							<md-option value="AC">Attaques composées</md-option>
+							<md-option value="AD">Attaques directes</md-option>
+							<md-option value="AV">Attaques après vide</md-option>
+							<md-option value="AP">Attaques sur préparation</md-option>
+							<md-option value="LI">Lignes</md-option>
+							<md-option value="CA">Contre-attaques</md-option>
+							<md-option value="CR">Contre-ripostes</md-option>
+							<md-option value="CT">Contre-temps</md-option>
+							<md-option value="SP">Sortie de piste</md-option>
+						</md-select>
+					</md-input-container>
+					<div layout="row" layout-align="center center" ng-show="europedata.type" layout-wrap>
+						<chartpie my-attr="where" my-data="europedata.toucheType" flex></chartpie>
+						<chartpie my-attr="action" my-data="europedata.toucheType" flex></chartpie>
+					</div>
+				</div>
+			</div>
+			<div flex="33">
+				<div layout="column" layout-align="center center" layout-wrap>
+					<md-input-container class="md-block" flex>
+						<label>Choisi une Action</label>
+						<md-select ng-model="europedata.action">
+							<md-option value="AcL">Actions longues</md-option>
+							<md-option value="AcC">Actions courtes</md-option>
+						</md-select>
+					</md-input-container>
+					<div layout="row" layout-align="center center" ng-show="europedata.action" layout-wrap>
+						<chartpie my-attr="where" my-data="europedata.toucheAction" flex></chartpie>
+						<chartpie my-attr="type" my-data="europedata.toucheAction" flex></chartpie>
+					</div>
+				</div>
+			</div>
+			<div flex="33">
+				<div layout="column" layout-align="center center" layout-wrap>
+					<md-input-container class="md-block" flex>
+						<label>Choisi une Position</label>
+						<md-select ng-model="europedata.where">
+							<md-option value="fondD">Fond droite</md-option>
+							<md-option value="fondG">Fond gauche</md-option>
+							<md-option value="Mid">Milieu</md-option>
+							<md-option value="deuxmD">Deux mètres droite</md-option>
+							<md-option value="deuxmG">Deux mètres gauche</md-option>
+						</md-select>
+					</md-input-container>
+					<div layout="row" layout-align="center center" ng-show="europedata.where" layout-wrap>
+						<chartpie my-attr="type" my-data="europedata.toucheWhere" flex></chartpie>
+						<chartpie my-attr="action" my-data="europedata.toucheWhere" flex></chartpie>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

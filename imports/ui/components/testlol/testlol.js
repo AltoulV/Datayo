@@ -1,6 +1,7 @@
 import angular from 'angular';
 import angularMeteor from 'angular-meteor';
 import uiRouter from 'angular-ui-router';
+import { Meteor } from 'meteor/meteor';
 
 import template from './testlol.html';
 
@@ -28,7 +29,16 @@ export default angular.module(name, [
 function config($stateProvider) {
   'ngInject';
   $stateProvider.state('testlol', {
-      url: '/test',
-      template: '<testlol></testlol>'
+      url: '/app',
+      template: '<testlol></testlol>',
+      resolve: {
+      currentUser($q) {
+        if (Meteor.userId() === null) {
+          return $q.reject('AUTH_REQUIRED');
+        } else {
+          return $q.resolve();
+        }
+      }
+    }
     });
 }

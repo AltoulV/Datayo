@@ -1,0 +1,8 @@
+{
+  "galaxy.meteor.com": { 
+     "env": { 
+       "ROOT_URL": "http://datayo.eu.meteorapp.com", 
+       "MONGO_URL": "mongodb://datayo-myapp:Arthur.3@ds017776.mlab.com:17776/datayo-mongodb" 
+     } 
+   }
+}

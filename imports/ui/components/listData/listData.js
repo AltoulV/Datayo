@@ -6,6 +6,7 @@ import Chart from 'angular-chart.js';
 import template from './listData.html';
 import { Touche } from '../../../api/touche';
 import { Match } from '../../../api/match';
+import { Competition } from '../../../api/competition';
 import { name as chartpie } from '../chartPie/chartPie';
 
 class ListData {
@@ -13,27 +14,29 @@ class ListData {
     'ngInject';
 
     $reactive(this).attach($scope);
+    this.input = "";
     this.selectedPrise = null;
     this.selectedMise = null;
     this.selectedFilter = "type";
-    this.labels = ["1", "2"];
-    this.data = [1, 2];
     this.helpers({
       touche() {
         return Touche.find({});
       },
       match() {
         return Match.find({});
+      },
+      competition() {
+        return Competition.find({});
       }
     });
   }
-  lol() {
-    this.match.forEach((match) => {
-      console.log(match._id);
-    });
-    this.touche.forEach((touche) => {
-      console.log(touche.id_match);
-    });
+  addComp() {
+    Competition.insert({'name': this.input});
+  }
+  supComp() {
+    if (this.competition.length > 0) {
+      Competition.remove(this.competition[this.competition.length - 1]._id);
+    }
   }
 }
 
@@ -56,6 +59,15 @@ function config($stateProvider) {
   $stateProvider
     .state('ListData', {
       url: '/ListData',
-      template: '<listdata></listdata>'
+      template: '<listdata></listdata>',
+      resolve: {
+      currentUser($q) {
+        if (Meteor.userId() === null) {
+          return $q.reject('AUTH_REQUIRED');
+        } else {
+          return $q.resolve();
+        }
+      }
+    }
     });
 }

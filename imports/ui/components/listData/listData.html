@@ -1,7 +1,14 @@
-<h1>LISTE DATA</h1>
-<div layout="row" layout-align="center center">
-	      <md-button class="md-raised" ng-click="listdata.lol()">Blol</md-button>
-<md-input-container class="md-block" flex="20">
+<div layout="column" layout-align="center center">
+	<h1>LISTE DATA</h1>
+	<div layout="row" layout-align="center center">
+		<md-input-container>
+        	<label>Ajouter Competition</label>
+        	<input ng-model="listdata.input">
+    	</md-input-container>
+		<md-button class="md-raised" ng-click="listdata.addComp()">+</md-button>
+		<md-button class="md-raised" ng-click="listdata.supComp()">-</md-button>
+	</div>
+<!-- <md-input-container class="md-block" flex="20">
 	<label>mise</label>
 		<md-select ng-model="listdata.selectedMise" select-clear>
 			<md-option ng-value="{{null}}">all data</md-option>
@@ -18,11 +25,11 @@
 				{{data.prise}}
 			</md-option>
 		</md-select>
-</md-input-container>
+</md-input-container> -->
 </div>
 <ul>
 	<div layout="row">
-		<div flex>
+<!-- 		<div flex>
 			<li ng-repeat="data in listdata.touche | filter: {mise: listdata.selectedMise}">
 				{{data.prise}}
 				-vs-
@@ -30,7 +37,7 @@
 				{{data.sexe}}
 				<salut-remove data="data"></salut-remove>
 			</li>
-		</div>
+		</div> -->
 		<div flex>
 			<li ng-repeat="data in listdata.match">
 				{{data.date}}-
@@ -42,6 +49,11 @@
 				-
 				{{data.scoreD}}
 				<match-remove data="data"></match-remove>
+			</li>
+		</div>
+		<div flex>
+			<li ng-repeat="data in listdata.competition">
+				{{data.name}}
 			</li>
 		</div>
 	</div>
